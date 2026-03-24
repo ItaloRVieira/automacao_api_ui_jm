@@ -1,0 +1,75 @@
+name: CI - API e UI
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main", "develop" ]
+  workflow_dispatch:
+
+jobs:
+  api-tests:
+    name: API Tests - RestAssured
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: automacao_api
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Rodar testes API
+        run: mvn clean test
+
+      - name: Publicar relatórios API
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-api
+          path: |
+            automacao_api/target/surefire-reports
+            automacao_api/target/site
+
+  cypress-tests:
+    name: UI Tests - Cypress
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ui
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: ui/package-lock.json
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Rodar testes Cypress
+        run: npx cypress run
+
+      - name: Publicar vídeos e screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-cypress
+          path: |
+            ui/cypress/screenshots
+            ui/cypress/videos
+            ui/cypress/reports
