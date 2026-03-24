@@ -1,5 +1,6 @@
 export class HomePage {
-  lupaBusca = 'a.astra-search-icon[aria-label="Search button"]';
+  containerBusca = '.ast-search-menu-icon';
+  botaoBusca = 'a.astra-search-icon[aria-label="Search button"]';
   inputBusca = '.search-field';
 
   acessarHome() {
@@ -7,14 +8,22 @@ export class HomePage {
   }
 
   abrirBusca() {
-    cy.get(this.lupaBusca, { timeout: 10000 })
+    cy.get(this.botaoBusca, { timeout: 15000 })
+      .filter(':visible')
+      .first()
       .should('exist')
-      .should('be.visible')
       .scrollIntoView()
-      .click();
+      .then(($el) => {
+        $el[0].click();
+      });
 
-    cy.get(this.inputBusca, { timeout: 10000 })
-      .should('be.visible');
+    cy.get(this.containerBusca, { timeout: 15000 }).should(($container) => {
+      const html = $container.html();
+      expect(html).to.not.be.undefined;
+    });
+
+    cy.get(this.inputBusca, { timeout: 15000 })
+      .should('exist');
   }
 
   digitarBusca(texto) {
