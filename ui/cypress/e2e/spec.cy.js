@@ -2,7 +2,6 @@
 describe('Testes de pesquisas', () => {
     beforeEach(() => {
         cy.acessarHome()
-        cy.wait(6000)
     })
 
     it('Realizar uma pesquisa válida e verificar o resultado', () => {

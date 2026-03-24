@@ -1,5 +1,5 @@
 export class HomePage {
-  lupaBusca = '.ast-icon > .ahfb-svg-iconset';
+  lupaBusca = 'a.astra-search-icon[aria-label="Search button"]';
   inputBusca = '.search-field';
 
   acessarHome() {
@@ -7,7 +7,14 @@ export class HomePage {
   }
 
   abrirBusca() {
-    cy.get(this.lupaBusca).should('be.visible').click({ force: true });
+    cy.get(this.lupaBusca, { timeout: 10000 })
+      .should('exist')
+      .should('be.visible')
+      .scrollIntoView()
+      .click();
+
+    cy.get(this.inputBusca, { timeout: 10000 })
+      .should('be.visible');
   }
 
   digitarBusca(texto) {
