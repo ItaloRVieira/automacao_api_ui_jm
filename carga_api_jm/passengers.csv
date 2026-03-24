@@ -1,0 +1,4 @@
+firstName,lastName,address,city,state,zipCode,cardType,creditCardNumber,creditCardMonth,creditCardYear,nameOnCard
+Italo,Renan,Rua A,Betim,MG,32600-000,visa,4111111111111111,12,2028,Italo Renan
+Maria,Silva,Rua B,Belo Horizonte,MG,30100-000,amex,5555555555554444,10,2029,Maria Silva
+Joao,Souza,Rua C,Contagem,MG,32000-000,dinersclub,378282246310005,11,2030,Joao Souza
