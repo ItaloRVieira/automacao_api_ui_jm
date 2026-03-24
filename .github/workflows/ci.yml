@@ -42,6 +42,7 @@ jobs:
   cypress-tests:
     name: UI Tests - Cypress
     runs-on: ubuntu-latest
+    needs: api-tests
 
     defaults:
       run:
@@ -61,8 +62,21 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
-      - name: Rodar testes Cypress
-        run: npx cypress run
+      - name: Verificar estrutura de arquivos
+        run: |
+          pwd
+          ls -la
+          ls -la cypress
+          ls -la cypress/e2e
+          ls -la cypress/pages
+          cat cypress/e2e/spec.cy.js
+          cat cypress/pages/homePage.js
+
+      - name: Validar instalação do Cypress
+        run: npx cypress verify
+
+      - name: Rodar spec específica
+        run: npx cypress run --spec "cypress/e2e/spec.cy.js"
 
       - name: Publicar evidências Cypress
         if: always()
