@@ -27,11 +27,8 @@ jobs:
           java-version: '11'
           cache: maven
 
-      - name: Dar permissão ao Maven Wrapper
-        run: chmod +x mvnw
-
       - name: Rodar testes API
-        run: ./mvnw clean test
+        run: mvn clean test
 
       - name: Publicar relatórios API
         if: always()
