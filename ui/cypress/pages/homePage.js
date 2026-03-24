@@ -1,5 +1,5 @@
 export class HomePage {
-  lupaBusca = '[aria-label="Search button"]';
+  lupaBusca = '.ast-icon > .ahfb-svg-iconset';
   inputBusca = '.search-field';
 
   acessarHome() {
