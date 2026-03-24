@@ -7,7 +7,7 @@ export class HomePage {
   }
 
   abrirBusca() {
-    cy.get(this.lupaBusca).first().should('be.visible').click({ force: true });
+    cy.get(this.lupaBusca).filter(':visible').first().click({ force: true });
   }
 
   digitarBusca(texto) {
